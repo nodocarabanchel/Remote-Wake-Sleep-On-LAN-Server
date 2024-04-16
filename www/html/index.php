@@ -51,14 +51,17 @@ else
     <!-- Styles -->
     <link href="<?php echo $BOOTSTRAP_LOCATION_PREFIX; ?>bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
+    body, html {
+        height: 100%; /* Ensure that the body takes up the full height of the viewport */
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove default padding */
+        background: #f5f5f5; /* Optional: default background color */
+    }
     body {
-        padding-top: 40px !important;
-        padding-bottom: 40px;
-        background-color: #f5f5f5; /* Optional: Background color, can be removed or changed */
-        background-image: url('bootstrap/background.png'); /* Path to the background image */
-        background-size: cover; /* Ensure the background covers the entire body */
+        background-image: url('bootstrap/background.png'); /* Adjust the path as necessary */
+        background-size: cover; /* Cover the entire screen */
         background-position: center; /* Center the background image */
-        background-repeat: no-repeat; /* Prevent the background image from repeating */
+        background-repeat: no-repeat; /* Do not repeat the image */
     }
     .form-signin {
         max-width: 600px;
@@ -70,6 +73,7 @@ else
         box-shadow: 0 1px 2px rgba(0,0,0,.05);
     }
 </style>
+
 
     <link href="<?php echo $BOOTSTRAP_LOCATION_PREFIX; ?>bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 </head>
