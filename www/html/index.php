@@ -55,7 +55,7 @@ else
             padding-top: 40px !important;
             padding-bottom: 40px;
             background-color: #f5f5f5; /* You might want to remove or change this if it conflicts with your image */
-            background-image: url('<?php echo $BOOTSTRAP_LOCATION_PREFIX; ?>images/background.jpg'); /* Add your image URL here */
+            background-image: url('<?php echo $BOOTSTRAP_LOCATION_PREFIX; ?>background.png'); /* Add your image URL here */
             background-size: cover; /* Cover ensures the background image covers the entire body */
             background-position: center; /* Center the background image */
         }
@@ -74,7 +74,7 @@ else
 <body>
     <div class="container">
         <form class="form-signin" method="post">
-            <h2 class="form-signin-heading">Remote Wake/Sleep-On-LAN</h2>
+            <h2 class="form-signin-heading">Remote Wake NPC</h2>
             <?php
                 $approved = false;
                 $wake_up = false;
@@ -105,7 +105,7 @@ else
                     }
                     echo "</select>";
                 } else {
-                    echo "<p>Please log in to see the computer options.</p>";
+                    echo "<p>Please log in.</p>";
                 }
 
                 if ($check_current_status) {
