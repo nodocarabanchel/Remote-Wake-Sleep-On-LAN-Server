@@ -137,12 +137,12 @@ def _01_install_prereqs():
         subprocess.run(['sudo', 'apt-get', 'update'], check=True)
 
         # Use the latest available php version.
-        php_pkg = subprocess.run("apt-cache search --names-only ^php[0-9]+\.[0-9]+$ | awk '{print $1}", shell=True, check=True)
-        php_curl_pkg = subprocess.run("apt-cache search --names-only ^php[0-9]+\.[0-9]+\-curl$ | awk '{print $1}", shell=True, check=True)
-        php_apache_pkg = subprocess.run("apt-cache search --names-only ^libapache2-mod-php[0-9]+\.[0-9]+$ | awk '{print $1}", shell=True, check=True)
+        #php_pkg = subprocess.run("apt-cache search --names-only ^php[0-9]+\.[0-9]+$ | awk '{print $1}", shell=True, check=True)
+        #php_curl_pkg = subprocess.run("apt-cache search --names-only ^php[0-9]+\.[0-9]+\-curl$ | awk '{print $1}", shell=True, check=True)
+        #php_apache_pkg = subprocess.run("apt-cache search --names-only ^libapache2-mod-php[0-9]+\.[0-9]+$ | awk '{print $1}", shell=True, check=True)
 
         # Install packages
-        subprocess.run(['sudo', 'apt-get', '-y', 'install', 'wakeonlan', 'git', 'apache2', php_pkg, php_curl_pkg, php_apache_pkg, 'snapd'], check=True)
+        subprocess.run(['sudo', 'apt-get', '-y', 'install', 'wakeonlan', 'git', 'apache2', 'php8.2', 'php8.2-curl', 'libapache2-mod-php8.2', 'snapd'], check=True)
         subprocess.run(['sudo', 'snap', 'install', 'core'], check=True)
         subprocess.run(['sudo', 'snap', 'refresh', 'core'], check=True)
         subprocess.run(['sudo', 'apt-get', '-y', 'remove', 'certbot']) # Remove any existing installations from package managers
