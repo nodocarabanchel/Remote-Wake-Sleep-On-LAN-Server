@@ -119,7 +119,6 @@ else
     $pinginfo = exec("ping -c 1 " . $COMPUTER_LOCAL_IP[$selectedComputer]);
     if (empty($pinginfo)) {
         echo "<p style='color:#CC0000;'><b>" . $COMPUTER_NAME[$selectedComputer] . " is currently offline.</b></p>";
-        // Provide a button to wake up the computer
         echo "<form method='post'>";
         echo "<input type='hidden' name='password' value='" . htmlspecialchars($_POST['password']) . "'>";
         echo "<button type='submit' name='submitbutton' value='Wake Up!'>Wake Up!</button>";
@@ -129,13 +128,29 @@ else
     }
 } elseif ($wake_up) {
     echo "<p>Approved. Sending WOL Command...</p>";
-    $wakeCommand = "wakeonlan " . $COMPUTER_MAC[$selectedComputer];
-    exec($wakeCommand, $output, $return_var);
-    if ($return_var == 0) {
-        echo "<p style='color:#00CC00;'><b>WOL command sent successfully.</b></p>";
-    } else {
-        echo "<p style='color:#CC0000;'><b>Failed to send WOL command.</b></p>";
+    exec('wakeonlan ' . $COMPUTER_MAC[$selectedComputer]);
+    echo "<p>Command Sent. Waiting for " . $COMPUTER_NAME[$selectedComputer] . " to wake up...</p><p>";
+    $count = 1;
+    $down = true;
+    while ($count <= $MAX_PINGS && $down === true) {
+        echo "Ping " . $count . "...";
+        $pinginfo = exec("ping -c 1 " . $COMPUTER_LOCAL_IP[$selectedComputer]);
+        $count++;
+        if (!empty($pinginfo)) {
+            $down = false;
+            echo "<span style='color:#00CC00;'><b>It's Alive!</b></span><br />";
+            echo "<p><a href='?computer=" . $selectedComputer . "'>Return to the Wake/Sleep Control Home</a></p>";
+            $show_form = false;
+        } else {
+            echo "<span style='color:#CC0000;'><b>Still Down.</b></span><br />";
+        }
+        sleep($SLEEP_TIME);
     }
+    if ($down === true) {
+        echo "<p style='color:#CC0000;'><b>FAILED!</b> " . $COMPUTER_NAME[$selectedComputer] . " doesn't seem to be waking up... Try again?</p>";
+        echo "<p>(Or <a href='?computer=" . $selectedComputer . "'>Return to the Wake/Sleep Control Home</a>.)</p>";
+    }
+}
 } elseif ($go_to_sleep) {
           echo "<p>Approved. Sending Sleep Command...</p>";
           // Implement sleep command logic here
