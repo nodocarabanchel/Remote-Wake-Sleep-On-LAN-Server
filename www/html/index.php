@@ -51,24 +51,26 @@ else
     <!-- Styles -->
     <link href="<?php echo $BOOTSTRAP_LOCATION_PREFIX; ?>bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
-        body {
-            padding-top: 40px !important;
-            padding-bottom: 40px;
-            background-color: #f5f5f5; /* You might want to remove or change this if it conflicts with your image */
-            background-image: url('<?php echo $BOOTSTRAP_LOCATION_PREFIX; ?>background.png'); /* Add your image URL here */
-            background-size: cover; /* Cover ensures the background image covers the entire body */
-            background-position: center; /* Center the background image */
-        }
-        .form-signin {
-            max-width: 600px;
-            padding: 19px 29px 29px;
-            margin: 0 auto 20px;
-            background-color: #fff;
-            border: 1px solid #e5e5e5;
-            border-radius: 5px;
-            box-shadow: 0 1px 2px rgba(0,0,0,.05);
-        }
-    </style>
+    body {
+        padding-top: 40px !important;
+        padding-bottom: 40px;
+        background-color: #f5f5f5; /* Optional: Background color, can be removed or changed */
+        background-image: url('bootstrap/background.png'); /* Path to the background image */
+        background-size: cover; /* Ensure the background covers the entire body */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Prevent the background image from repeating */
+    }
+    .form-signin {
+        max-width: 600px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 5px;
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+</style>
+
     <link href="<?php echo $BOOTSTRAP_LOCATION_PREFIX; ?>bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 </head>
 <body>
