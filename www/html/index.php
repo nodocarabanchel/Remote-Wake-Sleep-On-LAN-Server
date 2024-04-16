@@ -127,6 +127,8 @@ else
         echo "<p style='color:#00CC00;'><b>" . $COMPUTER_NAME[$selectedComputer] . " is currently online.</b></p>";
     }
 } elseif ($wake_up) {
+   // Debugging: Print the value of $selectedComputer
+    echo "<p>Selected Computer: $selectedComputer</p>";
    #/ Retrieve the destination IP address for wake-up operation
     if (isset($selectedComputer) && isset($COMPUTER_LOCAL_IP[$selectedComputer])) {
         $destinationAddress = $COMPUTER_LOCAL_IP[$selectedComputer];
