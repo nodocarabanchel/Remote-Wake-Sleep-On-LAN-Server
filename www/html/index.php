@@ -109,17 +109,37 @@ else
                 }
 
                 if ($check_current_status) {
-                    echo "<p>Approved. Please wait while the computer is queried for its current status...</p>";
-                    // Implement status check logic here
-                } elseif ($wake_up) {
-                    echo "<p>Approved. Sending WOL Command...</p>";
-                    // Implement wake command logic here
-                } elseif ($go_to_sleep) {
-                    echo "<p>Approved. Sending Sleep Command...</p>";
-                    // Implement sleep command logic here
-                } elseif (isset($_POST['submitbutton'])) {
-                    echo "<p style='color:#CC0000;'><b>Invalid Passphrase. Request Denied.</b></p>";
-                }
+    echo "<p>Approved. Please wait while the computer is queried for its current status...</p>";
+    // Implement status check logic here
+    $pinginfo = exec("ping -c 1 " . $COMPUTER_LOCAL_IP[$selectedComputer]);
+    if (empty($pinginfo)) {
+        echo "<p style='color:#CC0000;'><b>" . $COMPUTER_NAME[$selectedComputer] . " is currently offline.</b></p>";
+    } else {
+        echo "<p style='color:#00CC00;'><b>" . $COMPUTER_NAME[$selectedComputer] . " is currently online.</b></p>";
+    }
+      } elseif ($wake_up) {
+          echo "<p>Approved. Sending WOL Command...</p>";
+          // Implement wake command logic here
+          $wakeCommand = "wakeonlan " . $COMPUTER_MAC[$selectedComputer];
+          exec($wakeCommand, $output, $return_var);
+          if ($return_var == 0) {
+              echo "<p style='color:#00CC00;'><b>WOL command sent successfully.</b></p>";
+          } else {
+              echo "<p style='color:#CC0000;'><b>Failed to send WOL command.</b></p>";
+          }
+      } elseif ($go_to_sleep) {
+          echo "<p>Approved. Sending Sleep Command...</p>";
+          // Implement sleep command logic here
+          $sleepCommand = "ssh -o StrictHostKeyChecking=no " . $COMPUTER_USER[$selectedComputer] . "@" . $COMPUTER_LOCAL_IP[$selectedComputer] . " 'poweroff'";
+          exec($sleepCommand, $output, $return_var);
+          if ($return_var == 0) {
+              echo "<p style='color:#00CC00;'><b>Sleep command sent successfully.</b></p>";
+          } else {
+              echo "<p style='color:#CC0000;'><b>Failed to send sleep command.</b></p>";
+          }
+      } elseif (isset($_POST['submitbutton'])) {
+          echo "<p style='color:#CC0000;'><b>Invalid Passphrase. Request Denied.</b></p>";
+      }
 
                 if (!isset($_POST['submitbutton']) || !$approved) {
                     echo '<input type="password" name="password" class="input-block-level" placeholder="Enter Passphrase">';
