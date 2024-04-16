@@ -1,5 +1,3 @@
-REMOTE WAKE/SLEEP-ON-LAN SERVER *(RWSOLS)*
-==========================================
 
 # Remote Wake/Sleep On LAN Server Fork
 
