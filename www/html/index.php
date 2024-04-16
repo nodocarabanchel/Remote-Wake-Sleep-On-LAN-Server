@@ -150,7 +150,6 @@ else
         echo "<p style='color:#CC0000;'><b>FAILED!</b> " . $COMPUTER_NAME[$selectedComputer] . " doesn't seem to be waking up... Try again?</p>";
         echo "<p>(Or <a href='?computer=" . $selectedComputer . "'>Return to the Wake/Sleep Control Home</a>.)</p>";
     }
-}
 } elseif ($go_to_sleep) {
           echo "<p>Approved. Sending Sleep Command...</p>";
           // Implement sleep command logic here
