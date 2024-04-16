@@ -127,6 +127,14 @@ else
         echo "<p style='color:#00CC00;'><b>" . $COMPUTER_NAME[$selectedComputer] . " is currently online.</b></p>";
     }
 } elseif ($wake_up) {
+   / Retrieve the destination IP address for wake-up operation
+    if (isset($selectedComputer) && isset($COMPUTER_LOCAL_IP[$selectedComputer])) {
+        $destinationAddress = $COMPUTER_LOCAL_IP[$selectedComputer];
+    } else {
+        echo "<p>Error: Selected computer is not valid.</p>";
+        // Handle the error condition accordingly
+        exit; // Or perform any other error handling
+    }
     echo "<p>Approved. Sending WOL Command...</p>";
     exec('wakeonlan ' . $COMPUTER_MAC[$selectedComputer]);
     echo "<p>Command Sent. Waiting for " . $COMPUTER_NAME[$selectedComputer] . " to wake up...</p><p>";
