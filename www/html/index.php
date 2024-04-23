@@ -39,12 +39,14 @@ if (!isset($_SESSION['csrf_token'])) {
 
 // Check user inputs and determine the action
 $approved = $_SESSION['approved'] ?? false;
+$status_message = "Ready"; // Default status message
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['csrf_token']) && hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         if (isset($_POST['password']) && password_verify($_POST['password'], $APPROVED_HASH)) {
             $_SESSION['approved'] = true; // Set session approved if password is verified.
             session_regenerate_id(true); // Regenerate session ID upon login
             $approved = true;
+            $status_message = "Login successful!";
         } else {
             $login_error = "Invalid passphrase. Please try again.";
         }
@@ -53,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Handle operations
             $selectedComputerIndex = $_POST['computer'] ?? 0;
             $action = $_POST['submitbutton'];
-            handleOperations($selectedComputerIndex, $action);
+            $status_message = handleOperations($selectedComputerIndex, $action);
         }
     } else {
         $login_error = "CSRF token mismatch.";
@@ -66,23 +68,21 @@ function handleOperations($computerId, $action) {
         case "Wake Up!":
             $mac = $COMPUTER_MAC[$computerId];
             exec("wakeonlan $mac");
-            echo "<p>Command Sent. Waiting for " . $COMPUTER_NAME[$computerId] . " to wake up...</p>";
-            break;
+            return "Command Sent. Waiting for " . $COMPUTER_NAME[$computerId] . " to wake up...";
         case "Sleep!":
             $ip = $COMPUTER_LOCAL_IP[$computerId];
             exec("ssh -o StrictHostKeyChecking=no pi@$ip 'sudo poweroff'");
-            echo "<p>Sleep command sent to " . $COMPUTER_NAME[$computerId] . ".</p>";
-            break;
+            return "Sleep command sent to " . $COMPUTER_NAME[$computerId] . ".";
         case "Check Status":
             $ip = $COMPUTER_LOCAL_IP[$computerId];
             $result = exec("ping -c 1 $ip");
             if (empty($result)) {
-                echo "<p>" . $COMPUTER_NAME[$computerId] . " is offline.</p>";
+                return $COMPUTER_NAME[$computerId] . " is offline.";
             } else {
-                echo "<p>" . $COMPUTER_NAME[$computerId] . " is online.</p>";
+                return $COMPUTER_NAME[$computerId] . " is online.";
             }
-            break;
     }
+    return "Invalid action specified.";
 }
 ?>
 <!DOCTYPE html>
@@ -118,16 +118,25 @@ function handleOperations($computerId, $action) {
         border-radius: 5px;
         box-shadow: 0 1px 2px rgba(0,0,0,.05);
     }
+    .status-message {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #000;
+        background-color: rgba(255,255,255,0.8);
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
     </style>
 </head>
 <body>
+    <div class="status-message"><?php echo $status_message; ?></div>
     <div class="container">
         <form class="form-signin" method="post">
             <h2 class="form-signin-heading">Remote Wake NPC</h2>
             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <?php if ($approved): ?>
                 <div>Welcome, you are logged in!</div>
-                <!-- Display computer selection and action buttons -->
                 <select name="computer" onchange='this.form.submit()'>
                     <?php foreach ($COMPUTER_NAME as $index => $name): ?>
                         <option value='<?php echo $index; ?>' <?php echo ($selectedComputerIndex == $index ? "selected" : ""); ?>>
