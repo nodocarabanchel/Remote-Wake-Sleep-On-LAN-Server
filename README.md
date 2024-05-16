@@ -52,6 +52,15 @@ Reinicia el servidor Apache para aplicar los cambios:
 sudo systemctl restart apache2
 ```
 
+### 4. Correr el servicio
+
+```bash
+python setup.py 
+```
+
+En los pasos, indicar que el servicio de dynDNS apunte a la ip pública del servidor y no configurar el certificado de certbot porque ya lo tenemos en el proxy inverso de nginx.
+
+
 # Remote Wake/Sleep On LAN Server Fork
 
 Este repositorio es un fork del proyecto original Remote Wake/Sleep On LAN Server. Este fork incluye actualizaciones en el archivo de configuración `config.php` para mejorar la compatibilidad y funcionalidad, además de incluir configuración específica para el uso con un proxy inverso.
