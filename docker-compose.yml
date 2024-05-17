@@ -6,7 +6,7 @@ services:
     container_name: rwsols_web
     volumes:
       - ./www/html:/var/www/html
-      - ./apache2_configs/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./apache2_configs/000-default_http.conf:/etc/apache2/sites-available/000-default_http.conf
     ports:
       - "80:8080"
     environment:
