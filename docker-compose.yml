@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: rwsols_web
+    volumes:
+      - ./www/html:/var/www/html
+      - ./config/000-default.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - "80:8080"
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+    restart: unless-stopped
+
+volumes:
+  letsencrypt:
