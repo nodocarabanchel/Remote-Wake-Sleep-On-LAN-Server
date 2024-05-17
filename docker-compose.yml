@@ -8,7 +8,7 @@ services:
       - ./www/html:/var/www/html
       - ./apache2_configs/000-default_http.conf:/etc/apache2/sites-available/000-default_http.conf
     ports:
-      - "80:8080"
+      - "8080:80"
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
