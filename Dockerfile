@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 # Copy the apache configuration file
-COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY apache2_configs/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable site configuration
 RUN a2ensite 000-default
